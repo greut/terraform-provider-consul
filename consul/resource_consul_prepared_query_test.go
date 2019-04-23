@@ -129,20 +129,7 @@ func testAccCheckConsulPreparedQueryExists() resource.TestCheckFunc {
 }
 
 func testAccCheckConsulPreparedQueryAttrValue(attr, val string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		rn, ok := s.RootModule().Resources["consul_prepared_query.foo"]
-		if !ok {
-			return fmt.Errorf("Resource not found")
-		}
-		out, ok := rn.Primary.Attributes[attr]
-		if !ok {
-			return fmt.Errorf("Attribute '%s' not found: %#v", attr, rn.Primary.Attributes)
-		}
-		if out != val {
-			return fmt.Errorf("Attribute '%s' value '%s' != '%s'", attr, out, val)
-		}
-		return nil
-	}
+	return resource.TestCheckResourceAttr("consul_prepared_query.foo", attr, val)
 }
 
 const testAccConsulPreparedQueryConfig = `
